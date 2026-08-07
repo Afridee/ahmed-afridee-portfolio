@@ -52,18 +52,18 @@ export function Contact() {
               {channels.map((channel) => {
                 const external = channel.href.startsWith('http');
                 return (
-                  <StaggerItem key={channel.label}>
+                  <StaggerItem key={channel.label} className="min-w-0">
                     <a
                       href={channel.href}
                       {...(external
                         ? { target: '_blank', rel: 'noopener noreferrer' }
                         : {})}
-                      className="flex items-center gap-4 rounded-lg border border-white/10 bg-white/5 px-5 py-4 transition-colors duration-200 ease-out hover:border-cobalt/60 hover:bg-white/10"
+                      className="flex w-full min-w-0 items-center gap-4 overflow-hidden rounded-lg border border-white/10 bg-white/5 px-5 py-4 transition-colors duration-200 ease-out hover:border-cobalt/60 hover:bg-white/10"
                     >
                       <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-pill bg-white/10 text-cobalt">
                         <channel.icon size={18} />
                       </span>
-                      <span className="min-w-0">
+                      <span className="min-w-0 flex-1">
                         <span className="block text-small font-medium text-silver">
                           {channel.label}
                         </span>
