@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply bg-canvas text-ink antialiased;
+  }
+
+  ::selection {
+    background-color: #0d74ce;
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid #0d74ce;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-container px-6;
+  }
+
+  /* Gallery spacing between sections, applied once as flex gap */
+  .section-stack {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4rem, 8vw, 8rem);
+  }
+
+  .prose-measure {
+    max-width: 72ch;
+  }
+}
