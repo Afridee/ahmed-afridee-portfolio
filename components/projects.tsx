@@ -1,9 +1,17 @@
 'use client';
 
+import { useRef } from 'react';
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'framer-motion';
 import { ChevronRight, Github, Play, Youtube } from 'lucide-react';
 import { projects, type Project } from '@/lib/content';
 import { Reveal, StaggerGroup, StaggerItem } from './reveal';
 import { SectionHeader } from './section-header';
+import { TiltCard } from './tilt-card';
 
 function youtubeId(url: string): string | null {
   const match = url.match(/(?:youtu\.be\/|[?&]v=)([\w-]{11})/);
@@ -102,11 +110,32 @@ function ProjectRow({
 }) {
   const reversed = index % 2 === 1;
 
+  // Visual column drifts gently against the text column while the row is in
+  // view, reinforcing the zig-zag rhythm.
+  const rowRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: rowRef,
+    offset: ['start end', 'end start'],
+  });
+  const visualY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reducedMotion ? [0, 0] : [20, -20],
+  );
+
   return (
-    <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
+    <div
+      ref={rowRef}
+      className="grid items-center gap-10 md:grid-cols-2 md:gap-16"
+    >
       {/* Zig-zag: visual and text swap sides on alternate rows (md and up) */}
       <Reveal className={reversed ? 'md:order-2' : ''}>
-        <ProjectVisual project={project} />
+        <motion.div style={{ y: visualY }}>
+          <TiltCard className="rounded-[24px]">
+            <ProjectVisual project={project} />
+          </TiltCard>
+        </motion.div>
       </Reveal>
 
       <Reveal className={reversed ? 'md:order-1' : ''} delay={0.08}>

@@ -3,11 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
+  /* Anchor scrolling is handled by Lenis (components/smooth-scroll.tsx);
+     CSS smooth scrolling would fight it. */
 
   body {
     @apply bg-canvas text-ink antialiased;
@@ -38,5 +35,149 @@
 
   .prose-measure {
     max-width: 72ch;
+  }
+
+  /* --- Hero backdrop: aurora blobs + cursor-lit dot grid --- */
+
+  .hero-aurora {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    will-change: transform;
+  }
+
+  .hero-aurora-1 {
+    width: 44rem;
+    height: 44rem;
+    left: -14rem;
+    top: -16rem;
+    background: radial-gradient(circle, rgba(13, 116, 206, 0.32), transparent 70%);
+    animation: aurora-drift-1 36s ease-in-out infinite alternate;
+  }
+
+  .hero-aurora-2 {
+    width: 38rem;
+    height: 38rem;
+    right: -12rem;
+    bottom: -14rem;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent 70%);
+    animation: aurora-drift-2 44s ease-in-out infinite alternate;
+  }
+
+  .hero-aurora-3 {
+    width: 30rem;
+    height: 30rem;
+    left: 40%;
+    top: 32%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.14), transparent 70%);
+    animation: aurora-drift-3 40s ease-in-out infinite alternate;
+  }
+
+  .hero-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Brighter cobalt dots, revealed only inside a circle around the cursor. */
+  .hero-dots-glow {
+    background-image: radial-gradient(rgba(120, 180, 255, 0.6) 1px, transparent 1.5px);
+    -webkit-mask-image: radial-gradient(
+      260px circle at var(--mx) var(--my),
+      black,
+      transparent
+    );
+    mask-image: radial-gradient(
+      260px circle at var(--mx) var(--my),
+      black,
+      transparent
+    );
+  }
+
+  /* --- Typewriter caret --- */
+
+  .typewriter-caret {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-left: 3px;
+    vertical-align: -0.15em;
+    background-color: #0d74ce;
+    animation: caret-blink 1.1s steps(2, start) infinite;
+  }
+
+  /* --- CTA sheen: single light sweep across the button on hover --- */
+
+  .btn-sheen {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-sheen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.35) 50%,
+      transparent 60%
+    );
+    transform: translateX(-150%);
+    pointer-events: none;
+  }
+
+  .btn-sheen:hover::after {
+    transform: translateX(150%);
+    transition: transform 0.6s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-aurora {
+      animation: none;
+    }
+
+    .hero-dots-glow {
+      display: none;
+    }
+
+    .btn-sheen:hover::after {
+      transition: none;
+      transform: translateX(-150%);
+    }
+  }
+}
+
+@keyframes caret-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes aurora-drift-1 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(7rem, 4rem, 0) scale(1.15);
+  }
+}
+
+@keyframes aurora-drift-2 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(-6rem, -5rem, 0) scale(0.95);
+  }
+}
+
+@keyframes aurora-drift-3 {
+  from {
+    transform: translate3d(-3rem, 2rem, 0) scale(0.9);
+  }
+  to {
+    transform: translate3d(4rem, -3rem, 0) scale(1.1);
   }
 }

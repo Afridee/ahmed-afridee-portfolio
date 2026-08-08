@@ -4,6 +4,7 @@ import { GraduationCap } from 'lucide-react';
 import { profile, aboutStats, education } from '@/lib/content';
 import { Reveal, StaggerGroup, StaggerItem } from './reveal';
 import { SectionHeader } from './section-header';
+import { TiltCard } from './tilt-card';
 
 export function About() {
   return (
@@ -33,14 +34,13 @@ export function About() {
 
           <StaggerGroup className="grid grid-cols-2 gap-4">
             {aboutStats.map((stat) => (
-              <StaggerItem
-                key={stat.label}
-                className="rounded-lg border border-lavender bg-branco p-5 shadow-whisper"
-              >
-                <p className="font-mono text-[1.75rem] font-bold tracking-tight text-cobalt">
-                  {stat.value}
-                </p>
-                <p className="mt-1 text-small text-slate">{stat.label}</p>
+              <StaggerItem key={stat.label}>
+                <TiltCard className="h-full rounded-lg border border-lavender bg-branco p-5 shadow-whisper">
+                  <p className="font-mono text-[1.75rem] font-bold tracking-tight text-cobalt">
+                    {stat.value}
+                  </p>
+                  <p className="mt-1 text-small text-slate">{stat.label}</p>
+                </TiltCard>
               </StaggerItem>
             ))}
           </StaggerGroup>
