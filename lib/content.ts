@@ -18,6 +18,14 @@ export const profile = {
     'I\u2019m a Flutter developer and AI engineer with 5+ years of production experience across Android and iOS. Today I build offline-first, high-volume systems that keep 4,500+ field agents working through zero-connectivity zones; before that I spent five years as the sole developer of a live employee management app used across client organisations. More recently my work has moved into applied AI: on-device pipelines built with LangChain, LangGraph, flutter_gemma, and RAG, carried from architecture through App Store deployment. I wrote about that work in Towards AI (2026), on running LLMs on-device in Flutter.',
 };
 
+// Hero proof line; values must stay backed by the resume (see note above).
+// Deliberately avoids "5+ years" since the tagline already claims it.
+export const heroProof = [
+  { value: '4,500+', label: 'field agents served' },
+  { value: '50,000+', label: 'daily offline writes' },
+  { value: 'Published', label: 'in Towards AI' },
+];
+
 // Cycled by the hero typewriter; profile.role stays the reduced-motion fallback.
 export const heroRoles = [
   'Flutter Developer',

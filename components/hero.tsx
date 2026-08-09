@@ -9,8 +9,8 @@ import {
   useTransform,
   type Variants,
 } from 'framer-motion';
-import { ArrowDown, Download, Github, MapPin } from 'lucide-react';
-import { heroRoles, profile } from '@/lib/content';
+import { ArrowDown, ArrowRight, Github, MapPin } from 'lucide-react';
+import { heroProof, heroRoles, profile } from '@/lib/content';
 import { fadeUp, staggerContainer } from './reveal';
 import { HeroBackdrop } from './hero-backdrop';
 import { Typewriter } from './typewriter';
@@ -104,12 +104,11 @@ export function Hero() {
 
           <motion.div variants={fadeUp} className="mt-9 flex flex-wrap gap-3">
             <a
-              href="/resume.pdf"
-              download="Ahmed-Afridee-Resume.pdf"
+              href="#projects"
               className="btn-sheen inline-flex items-center gap-2 rounded-pill bg-cobalt px-6 py-3 text-small font-semibold text-branco shadow-whisper transition-[transform,background-color,box-shadow] duration-200 ease-out hover:-translate-y-px hover:bg-cobalt-dark hover:shadow-whisper-lift active:translate-y-px"
             >
-              <Download size={16} strokeWidth={2.5} />
-              Download Resume
+              View Projects
+              <ArrowRight size={16} strokeWidth={2.5} />
             </a>
             <a
               href={profile.github}
@@ -121,6 +120,28 @@ export function Hero() {
               GitHub
             </a>
           </motion.div>
+
+          <motion.ul
+            variants={fadeUp}
+            className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-small text-silver"
+          >
+            {heroProof.map((item, index) => (
+              <li key={item.label} className="flex items-center gap-3">
+                {index > 0 ? (
+                  <span
+                    aria-hidden
+                    className="h-1 w-1 rounded-pill bg-white/25"
+                  />
+                ) : null}
+                <span>
+                  <span className="font-semibold text-branco">
+                    {item.value}
+                  </span>{' '}
+                  {item.label}
+                </span>
+              </li>
+            ))}
+          </motion.ul>
 
           <motion.a
             variants={fadeUp}
@@ -145,16 +166,52 @@ export function Hero() {
               delay: 0.24,
             }}
           >
-            <div className="relative aspect-square overflow-hidden rounded-[24px] shadow-whisper ring-1 ring-white/15">
-              <Image
-                src="/profile.png"
-                alt="Portrait of Ahmed Afridee"
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 480px"
-                className="object-cover object-top"
+            {/* Portrait composition: the cutout sits in a glowing cobalt disc,
+                head breaking above its top edge (clipping handled by the
+                .hero-cutout mask in globals.css — geometry must stay in sync). */}
+            <div className="relative mx-auto aspect-square w-full max-w-[30rem] select-none">
+              <div
+                aria-hidden
+                className="hero-orbit absolute left-[1.5%] top-[9%] aspect-square w-[97%] rounded-pill border border-dashed border-white/15"
               />
-              <span className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-pill bg-ink/85 px-4 py-1.5 font-mono text-[0.75rem] text-branco backdrop-blur">
+              <div
+                aria-hidden
+                className="hero-disc absolute bottom-0 left-[7.5%] aspect-square w-[85%] rounded-pill"
+              />
+
+              <div className="hero-cutout absolute inset-0">
+                <Image
+                  src="/profile-cutout.png"
+                  alt="Portrait of Ahmed Afridee"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 480px"
+                  className="object-cover object-bottom"
+                />
+              </div>
+
+              {/* Hand-drawn-style emphasis strokes beside the head */}
+              <svg
+                aria-hidden
+                viewBox="0 0 48 48"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={4}
+                strokeLinecap="round"
+                className="absolute right-[10%] top-[1%] h-10 w-10 text-cobalt"
+              >
+                <path d="M8 40 L15 29" />
+                <path d="M23 35 L27 22" />
+                <path d="M35 27 L44 18" />
+              </svg>
+
+              <span className="hero-badge hero-badge-1 absolute left-[-3%] top-[34%] inline-flex items-center rounded-pill bg-ink/85 px-4 py-1.5 font-mono text-[0.75rem] text-branco ring-1 ring-white/15 backdrop-blur">
+                Flutter
+              </span>
+              <span className="hero-badge hero-badge-2 absolute right-[-2%] top-[54%] inline-flex items-center rounded-pill bg-ink/85 px-4 py-1.5 font-mono text-[0.75rem] text-branco ring-1 ring-white/15 backdrop-blur">
+                On-device AI
+              </span>
+              <span className="hero-badge hero-badge-3 absolute bottom-[5%] left-[1%] inline-flex items-center gap-2 rounded-pill bg-ink/85 px-4 py-1.5 font-mono text-[0.75rem] text-branco ring-1 ring-white/15 backdrop-blur">
                 <span className="h-1.5 w-1.5 rounded-pill bg-cobalt" />
                 Open to Flutter &amp; AI roles
               </span>

@@ -49,8 +49,9 @@ components/
 lib/
   content.ts        # All resume content (single source of truth)
 public/
-  resume.pdf        # Served at /resume.pdf
-  profile.png       # Hero portrait
+  resume.pdf         # Served at /resume.pdf
+  profile.png        # Portrait (used for the Open Graph image)
+  profile-cutout.png # Transparent-background portrait for the hero disc composition
 ```
 
 ## Editing content
